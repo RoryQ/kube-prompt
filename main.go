@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/c-bata/kube-prompt/internal/history"
 	"os"
 
 	prompt "github.com/c-bata/go-prompt"
@@ -26,6 +27,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	defer history.Close()
 	defer debug.Teardown()
 	fmt.Printf("kube-prompt %s (rev-%s)\n", version, revision)
 	fmt.Println("Please use `exit` or `Ctrl-D` to exit this program.")
@@ -37,6 +39,7 @@ func main() {
 		prompt.OptionPrefix(">>> "),
 		prompt.OptionInputTextColor(prompt.Yellow),
 		prompt.OptionCompletionWordSeparator(completer.FilePathCompletionSeparator),
+		history.LoadPersisted(),
 	)
 	p.Run()
 }

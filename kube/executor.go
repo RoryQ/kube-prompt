@@ -3,6 +3,7 @@ package kube
 import (
 	"bytes"
 	"fmt"
+	"github.com/c-bata/kube-prompt/internal/history"
 	"os"
 	"os/exec"
 	"strings"
@@ -11,6 +12,7 @@ import (
 )
 
 func Executor(s string) {
+	history.LogHistory(s)
 	s = strings.TrimSpace(s)
 	if s == "" {
 		return
@@ -31,6 +33,7 @@ func Executor(s string) {
 }
 
 func ExecuteAndGetResult(s string) string {
+	history.LogHistory(s)
 	s = strings.TrimSpace(s)
 	if s == "" {
 		debug.Log("you need to pass the something arguments")
